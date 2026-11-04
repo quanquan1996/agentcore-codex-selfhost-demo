@@ -1,0 +1,18 @@
+# Non-secret settings only. Model and provider are also passed by server.py.
+model = "global.openai.gpt-6.1-sol"
+model_provider = "amazon-bedrock-runtime"
+model_reasoning_effort = "low"
+check_for_update_on_startup = false
+
+[model_providers.amazon-bedrock-runtime.aws]
+region = "us-east-1"
+
+[otel]
+log_user_prompt = false
+
+# Tools come from AgentCore Gateway; credentials stay in AgentCore Identity.
+[mcp_servers.gateway]
+command = "/app/gateway-mcp.sh"
+# Codex starts MCP servers with a minimal environment; forward only what the proxy needs.
+env_vars = ["GATEWAY_URL", "AWS_REGION"]
+startup_timeout_sec = 60

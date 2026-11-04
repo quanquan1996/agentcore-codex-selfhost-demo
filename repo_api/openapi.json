@@ -1,0 +1,30 @@
+{
+  "openapi": "3.0.1",
+  "info": {"title": "Repo API", "version": "1.0"},
+  "servers": [{"url": "${API_URL}"}],
+  "paths": {
+    "/repos/{repo}/pulls": {
+      "get": {"operationId": "listPullRequests", "description": "List open pull requests",
+        "parameters": [{"name": "repo", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK"}}},
+      "post": {"operationId": "createPullRequest", "description": "Open a pull request",
+        "parameters": [{"name": "repo", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object",
+          "properties": {"title": {"type": "string"}, "head": {"type": "string"}, "base": {"type": "string"}},
+          "required": ["title", "head", "base"]}}}},
+        "responses": {"201": {"description": "Created"}}}
+    },
+    "/repos/{repo}/pulls/{number}/merge": {
+      "put": {"operationId": "mergePullRequest", "description": "Merge a pull request",
+        "parameters": [{"name": "repo", "in": "path", "required": true, "schema": {"type": "string"}},
+                       {"name": "number", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {"200": {"description": "OK"}}}
+    },
+    "/repos/{repo}/branches/{branch}": {
+      "delete": {"operationId": "deleteBranch", "description": "Delete a branch",
+        "parameters": [{"name": "repo", "in": "path", "required": true, "schema": {"type": "string"}},
+                       {"name": "branch", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK"}}}
+    }
+  }
+}
